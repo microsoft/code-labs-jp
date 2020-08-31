@@ -1,5 +1,9 @@
 import { Configuration } from '@nuxt/types'
 
+const title = 'Microsoft Japan Code Labs'
+const description =
+  '日本マイクロソフトの各製品およびサービスのサンプル コードとハンズオン コンテンツ'
+
 const configuration: Configuration = {
   /*
    ** Nuxt rendering mode
@@ -16,15 +20,39 @@ const configuration: Configuration = {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    title: 'Microsoft Japan Code Labs',
+    title,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content:
-          '日本マイクロソフトの各製品およびサービスのサンプル コードとハンズオン コンテンツ',
+        content: description,
+      },
+      {
+        hid: 'og:title',
+        property: 'og:title',
+        content: title,
+      },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content: description,
+      },
+      {
+        hid: 'og:url',
+        property: 'og:url',
+        content: 'https://microsoft.github.io/code-labs-jp/',
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: '/code-labs-jp/ogp.png',
+      },
+      {
+        hid: 'twitter:card',
+        name: 'twitter:card',
+        content: 'summary_large_image',
       },
     ],
     link: [{ rel: 'icon', href: '/code-labs-jp/favicon.ico' }],
