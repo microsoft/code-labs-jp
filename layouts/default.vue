@@ -32,7 +32,7 @@ html {
 }
 
 body {
-  background-color: #11100f;
+  background-color: #232323;
 }
 
 *,

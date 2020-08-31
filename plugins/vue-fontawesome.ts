@@ -8,6 +8,7 @@ import {
   faCheckSquare,
   faSquare,
 } from '@fortawesome/free-solid-svg-icons'
+import { faUser } from '@fortawesome/free-regular-svg-icons'
 
 config.autoAddCss = false
 
@@ -16,5 +17,6 @@ library.add(faUsers)
 library.add(faSearch)
 library.add(faCheckSquare)
 library.add(faSquare)
+library.add(faUser)
 
 Vue.component('fa', FontAwesomeIcon)

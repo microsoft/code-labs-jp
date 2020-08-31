@@ -19,48 +19,52 @@
         target="_blank"
         class="content"
       >
-        <div
-          class="content__main"
-          :style="{
-            'justify-content': content.description ? 'space-between' : 'center',
-          }"
-        >
-          <div class="content__title">
-            {{ content.title }}
-          </div>
-          <div class="content__products">
-            <span
-              v-for="product in content.products"
-              :key="product.id"
-              class="content__product"
-            >
-              {{ product.name }}
-            </span>
-          </div>
-          <!-- eslint-disable vue/no-v-html -->
+        <div class="content__content">
           <div
-            v-if="content.description"
-            class="content__description"
-            v-html="content.description"
-          ></div>
-          <!-- eslint-enable -->
-          <div v-if="content.targets.length" class="content__targets">
-            <fa
-              class="content__targets__icon"
-              icon="users"
-              area-hidden="true"
-            />
-            <span
-              v-for="(target, targetIndex) in content.targets"
-              :key="targetIndex"
-              class="content__target"
-            >
-              {{ target }}
-            </span>
+            class="content__main"
+            :style="{
+              'justify-content': content.description
+                ? 'space-between'
+                : 'center',
+            }"
+          >
+            <div class="content__title">
+              {{ content.title }}
+            </div>
+            <div class="content__products">
+              <span
+                v-for="product in content.products"
+                :key="product.id"
+                class="content__product"
+              >
+                {{ product.name }}
+              </span>
+            </div>
+            <!-- eslint-disable vue/no-v-html -->
+            <div
+              v-if="content.description"
+              class="content__description"
+              v-html="content.description"
+            ></div>
+            <!-- eslint-enable -->
+            <div v-if="content.targets.length" class="content__targets">
+              <fa
+                class="content__targets__icon"
+                :icon="['far', 'user']"
+                area-hidden="true"
+              />
+              <span
+                v-for="(target, targetIndex) in content.targets"
+                :key="targetIndex"
+                class="content__target"
+              >
+                {{ target }}
+              </span>
+            </div>
           </div>
-        </div>
-        <div class="content__icon">
-          <fa icon="external-link-alt" area-hidden="true" />
+          <div class="content__icon">
+            <fa icon="external-link-alt" area-hidden="true" />
+          </div>
         </div>
       </a>
     </div>
@@ -104,6 +108,7 @@ export default Vue.extend({
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  background-color: #111;
 }
 
 .hero {
@@ -120,9 +125,10 @@ export default Vue.extend({
 }
 
 .hero__content,
-.contents {
+.content__content {
   width: 90vw;
   max-width: 70rem;
+  margin: 0 auto;
 }
 
 .title {
@@ -150,14 +156,18 @@ export default Vue.extend({
 }
 
 .content {
+  display: block;
   padding: 3rem 2rem;
-  display: flex;
-  justify-content: space-between;
   color: #fff;
 }
 
 .content + .content {
   border-top: 1px solid var(--color-secondary);
+}
+
+.content__content {
+  display: flex;
+  justify-content: space-between;
 }
 
 .content__title {
@@ -190,7 +200,7 @@ export default Vue.extend({
 
 .content__targets {
   margin-top: 1.25rem;
-  font-weight: 600;
+  font-size: 0.8rem;
 }
 
 .content__targets__icon {
@@ -198,7 +208,6 @@ export default Vue.extend({
 }
 
 .content__target {
-  font-size: 0.9rem;
   margin-left: 0.25rem;
 }
 
@@ -216,6 +225,12 @@ export default Vue.extend({
   color: var(--color-secondary-light);
 }
 
+@media (min-width: 768px) {
+  .content:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
 @media (max-width: 767px) {
   .hero__content {
     padding: 3rem 0.5rem 2rem;
@@ -231,7 +246,10 @@ export default Vue.extend({
   }
 
   .content {
-    padding: 2rem 0.5rem;
+    padding: 2rem 1rem;
+  }
+
+  .content__content {
     flex-direction: column;
   }
 
