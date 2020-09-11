@@ -78,7 +78,6 @@
 import Vue from 'vue'
 import { contents } from '@/data/content'
 import { Condition } from '@/components/TheSearchSection.vue'
-import { products } from '~/data/product'
 
 export default Vue.extend({
   data() {
@@ -88,13 +87,11 @@ export default Vue.extend({
   },
   methods: {
     search(condition: Condition) {
-      const queriedProducts = condition.products.length
-        ? condition.products
-        : products.map((p) => p.id)
       this.contents = contents.filter(
-        (c) =>
-          condition.categories.includes(c.category) &&
-          c.products.some((p) => queriedProducts.includes(p.id))
+        (content) =>
+          condition.categories.includes(content.category) &&
+          (!condition.products.length ||
+            content.products.some((p) => condition.products.includes(p.id)))
       )
     },
   },
