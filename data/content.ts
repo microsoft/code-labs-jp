@@ -393,4 +393,15 @@ export const contents: Content[] = [
     products: productsByIds('23', '22'),
     url: 'https://github.com/ms-iotkithol-jp/DeviceEmulatorOnFunctions',
   },
+  {
+    id: '32',
+    title: 'Azure Machine Learning を活用した AutoML ハンズオン',
+    type: 'handson',
+    category: 'ai',
+    targets: [],
+    description:
+      '最近話題の AutoML について一から体験いただくコンテンツです。AutoML による大規模モデリングに加えて、モデル解釈やデータセット管理関連も学べます。',
+    products: [],
+    url: 'https://github.com/konabuta/Automated-ML-Workshop',
+  },
 ]
