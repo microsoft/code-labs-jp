@@ -20,7 +20,11 @@
         </div>
       </div>
     </div>
-    <the-contents v-if="contents.length" :contents="contents" />
+    <the-contents
+      v-if="contents.length"
+      :contents="contents"
+      class="contents"
+    />
     <div v-else class="no-contents">
       条件に一致するコンテンツはありません
     </div>
@@ -90,6 +94,8 @@ export default Vue.extend({
   padding: 0 0 3rem;
   position: relative;
   z-index: 1;
+  opacity: 0;
+  animation: fade-slide-up 0.3s 0.5s ease-out forwards;
 }
 
 .hero {
@@ -103,12 +109,8 @@ export default Vue.extend({
   margin: 0 auto;
   padding: 5rem 2rem 3rem;
   text-align: center;
-}
-
-.hero__content {
   width: 90vw;
   max-width: 70rem;
-  margin: 0 auto;
 }
 
 .title {
@@ -123,16 +125,12 @@ export default Vue.extend({
   );
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  opacity: 0;
-  animation: fade-slide-up 0.3s 0.5s ease-out forwards;
 }
 
 .description {
   line-height: 1.75;
   margin-top: 2rem;
   letter-spacing: 0.1em;
-  opacity: 0;
-  animation: fade-slide-up 0.3s 0.7s ease-out forwards;
 }
 
 .count {
@@ -165,6 +163,11 @@ export default Vue.extend({
 .count-fade-leave-to {
   transform: translate3d(0, 0.25rem, 0);
   opacity: 0;
+}
+
+.contents {
+  opacity: 0;
+  animation: fade-slide-up 0.3s 0.7s ease-out forwards;
 }
 
 @media (min-width: 768px) {
