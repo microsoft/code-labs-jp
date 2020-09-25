@@ -1,17 +1,31 @@
 <template>
   <div class="container">
     <div class="header">
-      <div class="hero">
-        <div class="hero__content">
-          <h1 class="title">Microsoft Japan<br />Code Labs</h1>
-          <p class="description">
-            日本マイクロソフトの各製品およびサービスのサンプル&nbsp;コードとハンズオン&nbsp;コンテンツ
-          </p>
+      <div class="header__bg"></div>
+      <div class="header__content">
+        <div class="hero">
+          <div class="hero__content">
+            <h1 class="title">Microsoft Japan<br />Code Labs</h1>
+            <p class="description">
+              日本マイクロソフトの各製品およびサービスのサンプル&nbsp;コードとハンズオン&nbsp;コンテンツ
+            </p>
+          </div>
+        </div>
+        <the-search-section class="search" @change="search" />
+        <div class="count">
+          <transition name="count-fade" mode="out-in">
+            <span :key="contents.length">{{ contents.length }}</span>
+          </transition>
+          <span>&nbsp;件&nbsp;/&nbsp;{{ allContents.length }}&nbsp;件</span>
         </div>
       </div>
-      <the-search-section @change="search" />
     </div>
-    <div v-if="contents.length" class="contents">
+    <transition-group
+      v-if="contents.length"
+      name="contents-fade"
+      class="contents"
+      tag="div"
+    >
       <a
         v-for="content in contents"
         :key="content.id"
@@ -67,7 +81,7 @@
           </div>
         </div>
       </a>
-    </div>
+    </transition-group>
     <div v-else class="no-contents">
       条件に一致するコンテンツはありません
     </div>
@@ -83,6 +97,7 @@ export default Vue.extend({
   data() {
     return {
       contents,
+      allContents: contents,
     }
   },
   methods: {
@@ -103,11 +118,39 @@ export default Vue.extend({
 <style scoped>
 .header {
   color: #fff;
+  position: relative;
+  background-color: #111;
+}
+
+.header__bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+.header__bg:before {
+  content: '';
+  opacity: 0;
+  animation: fade-scale-up 0.75s 0.25s cubic-bezier(0.24, 0.76, 0.75, 1.03)
+    forwards;
   background-image: url('~assets/images/header-bg.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-color: #111;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.header__content {
+  padding: 0 0 3rem;
+  position: relative;
+  z-index: 1;
 }
 
 .hero {
@@ -131,7 +174,7 @@ export default Vue.extend({
 }
 
 .title {
-  font-size: 6rem;
+  font-size: 7rem;
   font-weight: 500;
   line-height: 0.9;
   color: var(--color-primary-light);
@@ -142,22 +185,41 @@ export default Vue.extend({
   );
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  opacity: 0;
+  animation: fade-slide-up 0.3s 0.5s ease-out forwards;
 }
 
 .description {
   line-height: 1.75;
   margin-top: 2rem;
   letter-spacing: 0.1em;
+  opacity: 0;
+  animation: fade-slide-up 0.3s 0.7s ease-out forwards;
+}
+
+.count {
+  margin: 1rem auto 0;
+  width: 90vw;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 1rem;
+  font-size: 0.8rem;
+  color: var(--color-secondary-light);
 }
 
 .contents {
   margin: 0 auto;
+  opacity: 0;
+  animation: fade-slide-up 0.5s 0.8s ease-in-out forwards;
 }
 
 .content {
   display: block;
   padding: 3rem 2rem;
   color: #fff;
+  transition: opacity 0.2s ease-out, transform 0.3s ease-out,
+    background-color 0.3s;
 }
 
 .content + .content {
@@ -219,14 +281,36 @@ export default Vue.extend({
 }
 
 .no-contents {
-  margin: 3rem 1rem;
+  padding: 3rem 1rem;
   text-align: center;
   color: var(--color-secondary-light);
 }
 
+.contents-fade-enter,
+.contents-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.count-fade-enter-active,
+.count-fade-leave-active {
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.count-fade-enter {
+  transform: translate3d(0, -0.25rem, 0);
+  opacity: 0;
+}
+
+.count-fade-leave-to {
+  transform: translate3d(0, 0.25rem, 0);
+  opacity: 0;
+}
+
 @media (min-width: 768px) {
-  .content:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+  .count {
+    width: 70vw;
+    max-width: 50rem;
   }
 }
 
@@ -237,7 +321,7 @@ export default Vue.extend({
   }
 
   .title {
-    font-size: 3rem;
+    font-size: 3.75rem;
   }
 
   .description {
@@ -256,6 +340,36 @@ export default Vue.extend({
     margin-top: 1rem;
     display: flex;
     justify-content: flex-end;
+  }
+}
+
+@media (hover: hover) {
+  .content:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+@keyframes fade-scale-up {
+  0% {
+    opacity: 0;
+    transform: scale(1.1);
+    filter: blur(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes fade-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
   }
 }
 </style>

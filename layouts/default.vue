@@ -66,10 +66,9 @@ button {
   text-align: center;
   color: var(--color-secondary-light);
   font-size: 0.8rem;
-  margin-top: var(--footer-margin-top);
 }
 
 .page {
-  min-height: calc(100vh - (var(--footer-height) + var(--footer-margin-top)));
+  min-height: calc(100vh - var(--footer-height));
 }
 </style>

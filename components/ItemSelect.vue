@@ -6,21 +6,23 @@
       </span>
       <fa icon="search" size="lg" area-hidden="true" />
     </button>
-    <div v-if="menuShown" class="menu">
-      <label
-        v-for="item in items"
-        :key="item.key"
-        class="item"
-        :class="{ selected: selectedItemKeys.includes(item.key) }"
-      >
-        <input
-          type="checkbox"
-          class="item__checkbox"
-          @change="onChange($event, item.key)"
-        />
-        {{ item.name }}
-      </label>
-    </div>
+    <transition name="fade">
+      <div v-if="menuShown" class="menu">
+        <label
+          v-for="item in items"
+          :key="item.key"
+          class="item"
+          :class="{ selected: selectedItemKeys.includes(item.key) }"
+        >
+          <input
+            type="checkbox"
+            class="item__checkbox"
+            @change="onChange($event, item.key)"
+          />
+          {{ item.name }}
+        </label>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -80,8 +82,6 @@ export default Vue.extend({
 .select {
   position: relative;
   display: inline-block;
-  width: 24rem;
-  max-width: 100%;
 }
 
 .button {
@@ -96,11 +96,12 @@ export default Vue.extend({
   color: var(--color-primary-light);
   text-align: left;
   height: 3rem;
+  width: 100%;
 }
 
 .text {
   white-space: nowrap;
-  width: 19rem;
+  width: calc(100% - 2rem);
   color: #ddd;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -116,7 +117,6 @@ export default Vue.extend({
   border-radius: 4px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.5), 0 4px 10px rgba(0, 0, 0, 0.5);
   text-align: left;
-  padding: 0.25rem 0;
   max-height: 24rem;
   overflow-y: scroll;
 }
@@ -164,9 +164,37 @@ export default Vue.extend({
   display: none;
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s, transform 0.2s ease-out;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
 @media (max-width: 767px) {
   .button {
     width: 85vw;
+  }
+}
+
+@media (hover: hover) {
+  .button {
+    transition: background-color 0.2s;
+  }
+
+  .button:hover {
+    background-color: var(--color-secondary);
+  }
+
+  .item:before {
+    transition: background-color 0.2s;
+  }
+
+  .item:hover:before {
+    background-color: var(--color-secondary);
   }
 }
 </style>

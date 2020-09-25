@@ -22,7 +22,7 @@
       />
       <item-select
         class="select"
-        :items="languages.map((p) => ({ key: p.id, name: p.name }))"
+        :items="languages.map((l) => ({ key: l.id, name: l.name }))"
         placeholder="言語から探す"
         @change="onLanguagesChange"
       />
@@ -86,17 +86,18 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.search {
-  padding: 0 0 3rem;
-}
-
 .category-bar {
   text-align: center;
 }
 
 .categories {
   display: inline-flex;
-  background: linear-gradient(to left, #243a5e, var(--color-primary), #00c4e4);
+  background: linear-gradient(
+      to left top,
+      rgb(0 196 228 / 0.2),
+      rgb(67 22 140 / 0.3)
+    ),
+    linear-gradient(to left, #0e4282, var(--color-primary), #00c4e4);
   border-radius: 2px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
@@ -108,10 +109,11 @@ export default Vue.extend({
   padding: 1rem 1.25rem 1rem 3rem;
   font-weight: 700;
   position: relative;
+  transition: background-color 0.2s;
 }
 
 .category:not(.selected) {
-  background-color: #083458;
+  background-color: #232d42;
 }
 
 .category:before,
@@ -128,9 +130,10 @@ export default Vue.extend({
   left: 1.1rem;
   top: 50%;
   transform: translateY(-50%);
+  transition: border-color 0.2s;
 }
 
-.category.selected:after {
+.category:after {
   width: 0.5rem;
   height: 0.75rem;
   border-right: 4px solid #fff;
@@ -138,15 +141,24 @@ export default Vue.extend({
   transform: rotate(45deg) translateY(-50%);
   left: 1.225rem;
   top: calc(50% - 0.175rem);
+  opacity: 0;
+  transition: opacity 0.2s, border-color 0.2s;
+}
+
+.category.selected:after {
+  opacity: 1;
 }
 
 .selects {
-  text-align: center;
-  margin: 3rem 0 1rem;
+  display: flex;
+  margin: 2rem auto 1rem;
+  width: 70vw;
+  max-width: 50rem;
 }
 
 .select {
-  margin: 0.5rem 0;
+  width: 50%;
+  padding: 0.5rem;
 }
 
 @media (min-width: 768px) {
@@ -176,7 +188,24 @@ export default Vue.extend({
   }
 
   .selects {
-    margin: 2rem 0 0;
+    width: 90vw;
+    flex-direction: column;
+    margin: 2rem auto 0;
+  }
+
+  .select {
+    width: 100%;
+  }
+
+  .select + .select {
+    margin-top: 0.5rem;
+  }
+}
+
+@media (hover: hover) {
+  .category:hover:before,
+  .category:hover:after {
+    border-color: var(--color-primary-light);
   }
 }
 </style>
