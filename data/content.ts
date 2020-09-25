@@ -32,8 +32,7 @@ export const contents: Content[] = [
     description:
       'Azure Synapse Analytics を使用する機械学習ソリューションのデータ分析環境を実際に構築します。新機能のAzure Synapse Studio UIを通して、小売業のコールドデータ分析を、SparkやSQLを使って実際に行い、Azureでの最新分析環境を理解することができます。(体験型ハンズオン)',
     products: productsByIds('1', '2', '3', '4', '5', '6', '7', '8'),
-    url:
-      'https://github.com/takeokams/MCW-Azure-Synapse-Analytics-end-to-end-solution',
+    url: 'https://github.com/takeokams/MCW-Azure-Synapse-Analytics-and-AI',
   },
   {
     id: '2',
