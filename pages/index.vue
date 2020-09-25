@@ -91,7 +91,9 @@ export default Vue.extend({
         (content) =>
           condition.categories.includes(content.category) &&
           (!condition.products.length ||
-            content.products.some((p) => condition.products.includes(p.id)))
+            content.products.some((p) => condition.products.includes(p.id))) &&
+          (!condition.languages.length ||
+            content.languages?.some((l) => condition.languages.includes(l.id)))
       )
     },
   },

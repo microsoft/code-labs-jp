@@ -2,48 +2,52 @@
   <div class="select">
     <button class="button" @click="menuShown = !menuShown">
       <span class="text">
-        {{
-          selectedProductIds.length
-            ? selectedNames.join(', ')
-            : 'プロダクトから探す'
-        }}
+        {{ selectedItemKeys.length ? selectedNames.join(', ') : placeholder }}
       </span>
       <fa icon="search" size="lg" area-hidden="true" />
     </button>
     <div v-if="menuShown" class="menu">
       <label
-        v-for="product in products"
-        :key="product.id"
-        class="product"
-        :class="{ selected: selectedProductIds.includes(product.id) }"
+        v-for="item in items"
+        :key="item.key"
+        class="item"
+        :class="{ selected: selectedItemKeys.includes(item.key) }"
       >
         <input
           type="checkbox"
-          class="product__checkbox"
-          @change="onChange($event, product.id)"
+          class="item__checkbox"
+          @change="onChange($event, item.key)"
         />
-        {{ product.name }}
+        {{ item.name }}
       </label>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { products } from '@/data/product'
+import Vue, { PropOptions } from 'vue'
 
 export default Vue.extend({
+  props: {
+    items: {
+      type: Array,
+      required: true,
+    } as PropOptions<{ key: string; name: string }[]>,
+    placeholder: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
-      products,
-      selectedProductIds: [] as string[],
+      selectedItemKeys: [] as string[],
       menuShown: false,
     }
   },
   computed: {
     selectedNames(): string[] {
-      return this.selectedProductIds.map((id) => {
-        const product = this.products.find((p) => p.id === id)
+      return this.selectedItemKeys.map((key) => {
+        const product = this.items.find((p) => p.key === key)
         return product ? product.name : ''
       })
     },
@@ -55,12 +59,12 @@ export default Vue.extend({
     document.removeEventListener('click', this.onClickDocument)
   },
   methods: {
-    onChange(event: any, productId: string) {
+    onChange(event: any, key: string) {
       const checked = event.target && event.target.checked
       const updated = checked
-        ? [...new Set([...this.selectedProductIds, productId])]
-        : this.selectedProductIds.filter((id) => id !== productId)
-      this.selectedProductIds = updated
+        ? [...new Set([...this.selectedItemKeys, key])]
+        : this.selectedItemKeys.filter((k) => k !== key)
+      this.selectedItemKeys = updated
       this.$emit('change', updated)
     },
     onClickDocument(event: MouseEvent) {
@@ -76,6 +80,8 @@ export default Vue.extend({
 .select {
   position: relative;
   display: inline-block;
+  width: 24rem;
+  max-width: 100%;
 }
 
 .button {
@@ -86,7 +92,6 @@ export default Vue.extend({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 24rem;
   font-size: 1rem;
   color: var(--color-primary-light);
   text-align: left;
@@ -116,7 +121,7 @@ export default Vue.extend({
   overflow-y: scroll;
 }
 
-.product {
+.item {
   display: block;
   padding: 0.75rem 1rem;
   color: #fff;
@@ -125,17 +130,17 @@ export default Vue.extend({
   position: relative;
 }
 
-.product + .product {
+.item + .item {
   border-top: 1px solid var(--color-secondary-light);
 }
 
-.product:before,
-.product:after {
+.item:before,
+.item:after {
   position: absolute;
   content: '';
 }
 
-.product:before {
+.item:before {
   width: 1.25rem;
   height: 1.25rem;
   border-radius: 2px;
@@ -145,7 +150,7 @@ export default Vue.extend({
   transform: translateY(-50%);
 }
 
-.product.selected:after {
+.item.selected:after {
   width: 0.5rem;
   height: 0.75rem;
   border-right: 4px solid #00c4e4;
@@ -155,7 +160,7 @@ export default Vue.extend({
   top: calc(50% - 0.175rem);
 }
 
-.product__checkbox {
+.item__checkbox {
   display: none;
 }
 

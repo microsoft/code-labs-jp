@@ -13,8 +13,19 @@
         </button>
       </div>
     </div>
-    <div class="products">
-      <product-select @change="onProductsChange" />
+    <div class="selects">
+      <item-select
+        class="select"
+        :items="products.map((p) => ({ key: p.id, name: p.name }))"
+        placeholder="プロダクトから探す"
+        @change="onProductsChange"
+      />
+      <item-select
+        class="select"
+        :items="languages.map((p) => ({ key: p.id, name: p.name }))"
+        placeholder="言語から探す"
+        @change="onLanguagesChange"
+      />
     </div>
   </div>
 </template>
@@ -23,10 +34,12 @@
 import Vue from 'vue'
 import { categories, Category, toCategoryLabel } from '@/data/category'
 import { products } from '@/data/product'
+import { languages } from '@/data/language'
 
 export type Condition = {
   categories: Category[]
   products: string[]
+  languages: string[]
 }
 
 export default Vue.extend({
@@ -34,7 +47,9 @@ export default Vue.extend({
     return {
       categories,
       products,
+      languages,
       selectedProductIds: [] as string[],
+      selectedLanguageIds: [] as string[],
       selectedCategories: [...categories],
     }
   },
@@ -54,10 +69,15 @@ export default Vue.extend({
       this.selectedProductIds = productIds
       this.emit()
     },
+    onLanguagesChange(languageIds: string[]) {
+      this.selectedLanguageIds = languageIds
+      this.emit()
+    },
     emit() {
       const condition: Condition = {
         categories: this.selectedCategories,
         products: this.selectedProductIds,
+        languages: this.selectedLanguageIds,
       }
       this.$emit('change', condition)
     },
@@ -120,9 +140,13 @@ export default Vue.extend({
   top: calc(50% - 0.175rem);
 }
 
-.products {
+.selects {
   text-align: center;
   margin: 3rem 0 1rem;
+}
+
+.select {
+  margin: 0.5rem 0;
 }
 
 @media (min-width: 768px) {
@@ -151,8 +175,8 @@ export default Vue.extend({
     width: 100%;
   }
 
-  .products {
-    margin: 2.5rem 0 0;
+  .selects {
+    margin: 2rem 0 0;
   }
 }
 </style>

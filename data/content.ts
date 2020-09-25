@@ -1,5 +1,6 @@
 import { Product, products } from './product'
 import { Category } from './category'
+import { Language, languages } from './language'
 
 export type Content = {
   id: string
@@ -10,11 +11,15 @@ export type Content = {
   owner?: string
   description: string
   products: Product[]
+  languages?: Language[]
   url: string
 }
 
 const productsByIds = (...ids: string[]): Product[] =>
   products.filter((p) => ids.includes(p.id))
+
+const languagesByIds = (...ids: string[]): Language[] =>
+  languages.filter((p) => ids.includes(p.id))
 
 export const contents: Content[] = [
   {
@@ -121,7 +126,8 @@ export const contents: Content[] = [
     targets: [],
     description:
       'kubernetes のインストール、管理のためのツール群、Service Mesh、そして、VNet と MySQL 起動までを一通り体験可能です。',
-    products: productsByIds('26', '27'),
+    products: productsByIds('26'),
+    languages: languagesByIds('1'),
     url:
       'https://github.com/yoshioterada/k8s-Azure-Container-Service-AKS--on-Azure',
   },
@@ -133,7 +139,8 @@ export const contents: Content[] = [
     targets: [],
     description:
       'Microsoft Translator はテキスト(英語)からテキスト(日本語)の翻訳のほか、音声データ(wavファイル)からテキストへ翻訳などができます。本ハンズオンでは、テキストからテキストの翻訳、音声からテキストへの翻訳の２種類の翻訳の実装方法について紹介します',
-    products: productsByIds('28', '27'),
+    products: productsByIds('28'),
+    languages: languagesByIds('1'),
     url: 'https://github.com/yoshioterada/MS-Translator-Speech-HoL',
   },
   {
@@ -365,7 +372,8 @@ export const contents: Content[] = [
     owner: 'Tomoyuki Sumi',
     description:
       'Azure Cognitive Services の一つ、Anomaly Detector API のデモ（Node.js サンプル）です。 デモを実行するには、あらかじめ Anomaly Detector API のエンドポイントとアクセスキーを入手する必要があります。このデモでは、入力データや設定パラメータがどのような出力の違いとなるのかをグラフィカルに確認することができます。',
-    products: productsByIds('46', '47'),
+    products: productsByIds('46'),
+    languages: languagesByIds('2'),
     url: 'https://github.com/TOSUMI-MS/AnomalyDetectorAPIViewer',
   },
   {
