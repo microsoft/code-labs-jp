@@ -17,13 +17,13 @@
           <div class="content__title">
             {{ content.title }}
           </div>
-          <div class="content__products">
+          <div class="content__tags">
             <span
-              v-for="product in content.products"
-              :key="product.id"
-              class="content__product"
+              v-for="tag in tags(content)"
+              :key="tag.id"
+              class="content__tag"
             >
-              {{ product.name }}
+              {{ tag.name }}
             </span>
           </div>
           <!-- eslint-disable vue/no-v-html -->
@@ -67,6 +67,13 @@ export default Vue.extend({
       required: true,
     } as PropOptions<Content[]>,
   },
+  methods: {
+    tags(content: Content): { id: string; name: string }[] {
+      return content.languages
+        ? [...content.languages, ...content.products]
+        : content.products
+    },
+  },
 })
 </script>
 
@@ -97,11 +104,11 @@ export default Vue.extend({
   color: var(--color-primary-light);
 }
 
-.content__products {
+.content__tags {
   margin: 0.75rem -0.25rem 0;
 }
 
-.content__product {
+.content__tag {
   background-color: var(--color-secondary-dark);
   color: #fff;
   margin: 0.25rem 0.1rem;
