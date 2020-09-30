@@ -109,10 +109,6 @@ export const products: Product[] = [
     name: 'Azure Kubernetes Services',
   },
   {
-    id: '27',
-    name: 'Java',
-  },
-  {
     id: '28',
     name: 'Microsoft Translator',
   },
@@ -187,10 +183,6 @@ export const products: Product[] = [
   {
     id: '46',
     name: 'Azure Cognitive Service (Anomaly Detector)',
-  },
-  {
-    id: '47',
-    name: 'Node.js',
   },
   {
     id: '48',
