@@ -411,4 +411,16 @@ export const contents: Content[] = [
     products: [],
     url: 'https://github.com/konabuta/Automated-ML-Workshop',
   },
+  {
+    id: '33',
+    title:
+      'FgCF (Financial-grade Cloud Fundamentals) リファレンスアーキテクチャ/テクノロジガイドライン',
+    category: 'finance',
+    targets: ['Azure をご利用いただくアーキテクト、デベロッパーの皆様'],
+    description:
+      'FgCF は、企業がデジタル変革へ取り組んでいくために、Tech Intensity（テクノロジー強度）を強化していくための各種ハイレベルなリファレンスアーキテクチャやテクノロジガイドライン類を、日本のお客様に使いやすい・わかりやすい形で提供することを目的として開発されています。',
+    products: productsByIds('49', '50', '51', '5', '26', '52', '53'),
+    languages: languagesByIds('3', '4', '1', '5'),
+    url: 'https://github.com/nakamacchi/fgcf',
+  },
 ]

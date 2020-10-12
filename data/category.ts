@@ -6,6 +6,7 @@ export const categories = [
   'bi',
   'iot',
   'infra',
+  'finance',
 ] as const
 
 export type Category = typeof categories[number]
@@ -26,5 +27,7 @@ export const toCategoryLabel = (value: Category): string => {
       return 'IoT'
     case 'infra':
       return 'Infra'
+    case 'finance':
+      return 'Finance'
   }
 }

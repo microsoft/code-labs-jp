@@ -188,4 +188,24 @@ export const products: Product[] = [
     id: '48',
     name: 'Azure Arc',
   },
+  {
+    id: '49',
+    name: 'Azure',
+  },
+  {
+    id: '50',
+    name: 'Azure IaaS',
+  },
+  {
+    id: '51',
+    name: 'Azure VNET',
+  },
+  {
+    id: '52',
+    name: 'Azure Red Hat OpenShift',
+  },
+  {
+    id: '53',
+    name: 'Azure Batch',
+  },
 ]
