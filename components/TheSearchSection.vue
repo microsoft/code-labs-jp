@@ -183,10 +183,6 @@ export default Vue.extend({
     border-left: 1px solid rgb(32, 63, 86);
   }
 
-  .category:last-of-type {
-    width: 100%;
-  }
-
   .selects {
     width: 90vw;
     flex-direction: column;
