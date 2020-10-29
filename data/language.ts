@@ -1,27 +1,21 @@
+import contentfulClient from '@/contentful/client'
+import type { ILanguageFields } from '@/contentful/generated/types'
+
 export type Language = {
   id: string
   name: string
 }
 
-export const languages: Language[] = [
-  {
-    id: '1',
-    name: 'Java',
-  },
-  {
-    id: '2',
-    name: 'Node.js',
-  },
-  {
-    id: '3',
-    name: 'C#',
-  },
-  {
-    id: '4',
-    name: '.NET',
-  },
-  {
-    id: '5',
-    name: 'Azure CLI',
-  },
-]
+export const getLanguages = async (): Promise<Language[]> => {
+  const response = await contentfulClient.getEntries<ILanguageFields>({
+    content_type: 'language',
+    order: 'sys.createdAt',
+  })
+  const languages: Language[] = response.items.map((raw) => {
+    return {
+      id: raw.sys.id,
+      name: raw.fields.name,
+    }
+  })
+  return languages
+}
