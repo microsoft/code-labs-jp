@@ -4,12 +4,12 @@
       <div class="categories">
         <button
           v-for="category in categories"
-          :key="category"
+          :key="category.id"
           class="category"
-          :class="{ selected: selectedCategories.includes(category) }"
-          @click="onCategoryClick(category)"
+          :class="{ selected: selectedCategoryIds.includes(category.id) }"
+          @click="onCategoryClick(category.id)"
         >
-          {{ toCategoryLabel(category) }}
+          {{ category.name }}
         </button>
       </div>
     </div>
@@ -31,38 +31,49 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { categories, Category, toCategoryLabel } from '@/data/category'
-import { products } from '@/data/product'
-import { languages } from '@/data/language'
+import Vue, { PropOptions } from 'vue'
+import type { Product } from '@/data/product'
+import type { Category } from '@/data/category'
+import type { Language } from '@/data/language'
 
 export type Condition = {
-  categories: Category[]
+  categories: string[]
   products: string[]
   languages: string[]
 }
 
 export default Vue.extend({
+  props: {
+    categories: {
+      type: Array,
+      required: true,
+    } as PropOptions<Category[]>,
+    products: {
+      type: Array,
+      required: true,
+    } as PropOptions<Product[]>,
+    languages: {
+      type: Array,
+      required: true,
+    } as PropOptions<Language[]>,
+  },
   data() {
     return {
-      categories,
-      products,
-      languages,
+      selectedCategoryIds: [] as string[],
       selectedProductIds: [] as string[],
       selectedLanguageIds: [] as string[],
-      selectedCategories: [...categories],
     }
   },
+  created() {
+    this.selectedCategoryIds = this.categories.map((c) => c.id)
+  },
   methods: {
-    toCategoryLabel(value: Category): string {
-      return toCategoryLabel(value)
-    },
-    onCategoryClick(category: Category) {
-      const selected = this.selectedCategories.includes(category)
+    onCategoryClick(categoryId: string) {
+      const selected = this.selectedCategoryIds.includes(categoryId)
       const updated = selected
-        ? this.selectedCategories.filter((c) => c !== category)
-        : [...this.selectedCategories, category]
-      this.selectedCategories = updated
+        ? this.selectedCategoryIds.filter((c) => c !== categoryId)
+        : [...this.selectedCategoryIds, categoryId]
+      this.selectedCategoryIds = updated
       this.emit()
     },
     onProductsChange(productIds: string[]) {
@@ -75,7 +86,7 @@ export default Vue.extend({
     },
     emit() {
       const condition: Condition = {
-        categories: this.selectedCategories,
+        categories: this.selectedCategoryIds,
         products: this.selectedProductIds,
         languages: this.selectedLanguageIds,
       }

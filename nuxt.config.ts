@@ -1,10 +1,10 @@
-import { Configuration } from '@nuxt/types'
+import { NuxtConfig } from '@nuxt/types'
 
 const title = 'Microsoft Japan Code Labs'
 const description =
   '日本マイクロソフトの各製品およびサービスのサンプル コードとハンズオン コンテンツ'
 
-const configuration: Configuration = {
+const configuration: NuxtConfig = {
   /*
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
@@ -74,7 +74,10 @@ const configuration: Configuration = {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: ['@nuxt/typescript-build'],
+  buildModules: [
+    '@nuxt/typescript-build',
+    ['@nuxtjs/dotenv', { systemvars: true }],
+  ],
   /*
    ** Nuxt.js modules
    */
@@ -83,7 +86,13 @@ const configuration: Configuration = {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {},
+  build: {
+    extend(config) {
+      config.node = {
+        fs: 'empty', // https://github.com/nuxt-community/dotenv-module/issues/11
+      }
+    },
+  },
   router: {
     base: '/code-labs-jp/',
   },

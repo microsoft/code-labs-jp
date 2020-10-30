@@ -58,7 +58,7 @@
 
 <script lang="ts">
 import Vue, { PropOptions } from 'vue'
-import { Content } from '~/data/content'
+import { Content } from '@/data/content'
 
 export default Vue.extend({
   props: {

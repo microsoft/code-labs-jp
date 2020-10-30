@@ -11,7 +11,13 @@
             </p>
           </div>
         </div>
-        <the-search-section class="search" @change="search" />
+        <the-search-section
+          :categories="categories"
+          :products="products"
+          :languages="languages"
+          class="search"
+          @change="search"
+        />
         <div class="count">
           <transition name="count-fade" mode="out-in">
             <span :key="contents.length">{{ contents.length }}</span>
@@ -33,21 +39,36 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { contents } from '@/data/content'
 import { Condition } from '@/components/TheSearchSection.vue'
+import { Content, getContents } from '@/data/content'
+import { getProducts, Product } from '@/data/product'
+import { Category, getCategories } from '@/data/category'
+import { getLanguages, Language } from '@/data/language'
 
 export default Vue.extend({
+  async asyncData() {
+    const [contents, categories, products, languages] = await Promise.all([
+      getContents(),
+      getCategories(),
+      getProducts(),
+      getLanguages(),
+    ])
+    return { contents, allContents: contents, categories, products, languages }
+  },
   data() {
     return {
-      contents,
-      allContents: contents,
+      contents: [] as Content[],
+      allContents: [] as Content[],
+      categories: [] as Category[],
+      products: [] as Product[],
+      languages: [] as Language[],
     }
   },
   methods: {
     search(condition: Condition) {
-      this.contents = contents.filter(
+      this.contents = this.allContents.filter(
         (content) =>
-          condition.categories.includes(content.category) &&
+          condition.categories.includes(content.category.id) &&
           (!condition.products.length ||
             content.products.some((p) => condition.products.includes(p.id))) &&
           (!condition.languages.length ||

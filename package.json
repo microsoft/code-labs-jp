@@ -8,7 +8,8 @@
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
     "lint:ts": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
-    "lint": "npm run lint:ts"
+    "lint": "npm run lint:ts",
+    "contentful:generate": "contentful-typescript-codegen --output contentful/generated/types.ts"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
@@ -16,6 +17,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "@nuxt/typescript-runtime": "^1.0.0",
+    "@nuxtjs/dotenv": "^1.4.1",
+    "contentful": "^7.14.8",
     "nuxt": "^2.14.0"
   },
   "devDependencies": {
@@ -25,6 +28,8 @@
     "@nuxtjs/eslint-config-typescript": "^3.0.0",
     "@nuxtjs/eslint-module": "^2.0.0",
     "babel-eslint": "^10.1.0",
+    "contentful-management": "^6.1.2",
+    "contentful-typescript-codegen": "^3.2.1",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-nuxt": "^1.0.0",

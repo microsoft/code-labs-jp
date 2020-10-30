@@ -1,33 +1,21 @@
-export const categories = [
-  'data',
-  'retail',
-  'ai',
-  'analytics',
-  'bi',
-  'iot',
-  'infra',
-  'finance',
-] as const
+import contentfulClient from '@/contentful/client'
+import type { ICategoryFields } from '@/contentful/generated/types'
 
-export type Category = typeof categories[number]
+export type Category = {
+  id: string
+  name: string
+}
 
-export const toCategoryLabel = (value: Category): string => {
-  switch (value) {
-    case 'data':
-      return 'Data'
-    case 'retail':
-      return 'Retail'
-    case 'ai':
-      return 'AI'
-    case 'analytics':
-      return 'Analytics'
-    case 'bi':
-      return 'BI'
-    case 'iot':
-      return 'IoT'
-    case 'infra':
-      return 'Infra'
-    case 'finance':
-      return 'Finance'
-  }
+export const getCategories = async (): Promise<Category[]> => {
+  const response = await contentfulClient.getEntries<ICategoryFields>({
+    content_type: 'category',
+    order: 'sys.createdAt',
+  })
+  const categories: Category[] = response.items.map((raw) => {
+    return {
+      id: raw.sys.id,
+      name: raw.fields.name,
+    }
+  })
+  return categories
 }
