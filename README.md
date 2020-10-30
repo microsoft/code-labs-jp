@@ -1,3 +1,7 @@
+![Microsoft-Code-Labs-JP](https://raw.githubusercontent.com/microsoft/code-labs-jp/main/static/logo.png)
+
+日本マイクロソフトの各製品およびサービスのサンプル コードとハンズオン コンテンツ ポータルです(公式)。  
+ポータルサイトはこちら → https://microsoft.github.io/code-labs-jp/
 
 # Contributing
 
