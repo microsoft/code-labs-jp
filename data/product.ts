@@ -1,4 +1,4 @@
-import contentfulClient from '@/contentful/client'
+import getContentfulClient from '@/contentful/client'
 import type { IProductFields } from '@/contentful/generated/types'
 
 export type Product = {
@@ -7,7 +7,7 @@ export type Product = {
 }
 
 export const getProducts = async (): Promise<Product[]> => {
-  const response = await contentfulClient.getEntries<IProductFields>({
+  const response = await getContentfulClient().getEntries<IProductFields>({
     content_type: 'product',
     order: 'sys.createdAt',
   })
