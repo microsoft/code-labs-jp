@@ -1,4 +1,4 @@
-import contentfulClient from '@/contentful/client'
+import getContentfulClient from '@/contentful/client'
 import type { ILanguageFields } from '@/contentful/generated/types'
 
 export type Language = {
@@ -7,7 +7,7 @@ export type Language = {
 }
 
 export const getLanguages = async (): Promise<Language[]> => {
-  const response = await contentfulClient.getEntries<ILanguageFields>({
+  const response = await getContentfulClient().getEntries<ILanguageFields>({
     content_type: 'language',
     order: 'sys.createdAt',
   })
