@@ -18,7 +18,7 @@
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "@nuxt/typescript-runtime": "^1.0.0",
     "@nuxtjs/dotenv": "^1.4.1",
-    "contentful": "^7.14.8",
+    "contentful": "^10.1.0",
     "nuxt": "^2.14.0"
   },
   "devDependencies": {
@@ -28,7 +28,7 @@
     "@nuxtjs/eslint-config-typescript": "^3.0.0",
     "@nuxtjs/eslint-module": "^2.0.0",
     "babel-eslint": "^10.1.0",
-    "contentful-management": "^6.1.2",
+    "contentful-management": "^6.3.2",
     "contentful-typescript-codegen": "^3.2.1",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
